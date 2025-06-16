@@ -1,7 +1,6 @@
-// backend/controllers/taskController.js
 const Task = require('../models/Task');
 
-// Create a new task
+
 exports.createTask = async (req, res) => {
   try {
     const task = new Task({
@@ -18,7 +17,7 @@ exports.createTask = async (req, res) => {
   }
 };
 
-// Get all tasks for a user
+
 exports.getTasks = async (req, res) => {
   try {
     const tasks = await Task.find({ userId: req.user.id });
@@ -28,7 +27,7 @@ exports.getTasks = async (req, res) => {
   }
 };
 
-// Update a task
+
 exports.updateTask = async (req, res) => {
   try {
     const task = await Task.findOneAndUpdate(
@@ -45,7 +44,7 @@ exports.updateTask = async (req, res) => {
   }
 };
 
-// Delete a task
+
 exports.deleteTask = async (req, res) => {
   try {
     const task = await Task.findOneAndDelete({ _id: req.params.id, userId: req.user.id });
