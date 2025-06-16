@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { register } from "../../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -10,11 +11,15 @@ const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(register({ username, email, password })).then(() =>
-      navigate("/login")
-    );
+    try {
+      await dispatch(register({ username, email, password }));
+      toast.success("Registered successfully!");
+      navigate("/login");
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   return (
@@ -25,9 +30,7 @@ const Register = () => {
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-700 font-semibold mb-1">
-              Username
-            </label>
+            <label className="block text-gray-700 font-semibold mb-1">Username</label>
             <input
               type="text"
               value={username}
@@ -38,9 +41,7 @@ const Register = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-semibold mb-1">
-              Email
-            </label>
+            <label className="block text-gray-700 font-semibold mb-1">Email</label>
             <input
               type="email"
               value={email}
@@ -51,9 +52,7 @@ const Register = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-semibold mb-1">
-              Password
-            </label>
+            <label className="block text-gray-700 font-semibold mb-1">Password</label>
             <input
               type="password"
               value={password}

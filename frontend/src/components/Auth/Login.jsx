@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -9,22 +10,23 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(login({ email, password })).then(() => navigate("/tasks"));
+    try {
+      await dispatch(login({ email, password }));
+      navigate("/tasks");
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-purple-200">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
-        <h2 className="text-3xl font-bold mb-6 text-center text-purple-700">
-          Login
-        </h2>
+        <h2 className="text-3xl font-bold mb-6 text-center text-purple-700">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-700 font-semibold mb-1">
-              Email
-            </label>
+            <label className="block text-gray-700 font-semibold mb-1">Email</label>
             <input
               type="email"
               value={email}
@@ -35,9 +37,7 @@ const Login = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-semibold mb-1">
-              Password
-            </label>
+            <label className="block text-gray-700 font-semibold mb-1">Password</label>
             <input
               type="password"
               value={password}

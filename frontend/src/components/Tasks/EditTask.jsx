@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { updateTask } from "../../redux/actions/taskActions";
 import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const EditTask = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const EditTask = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateTask(task._id, { title, description, status }));
+    toast.success("Task updated successfully!");
     navigate("/tasks");
   };
 

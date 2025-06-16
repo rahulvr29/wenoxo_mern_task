@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchTasks, deleteTask } from "../../redux/actions/taskActions";
+import { toast } from "react-toastify";
 
 const TaskList = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const TaskList = () => {
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this task?")) {
       dispatch(deleteTask(id));
+      toast.success("Task deleted successfully!");
     }
   };
 

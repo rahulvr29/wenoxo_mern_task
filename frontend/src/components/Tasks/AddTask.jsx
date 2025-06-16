@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createTask } from "../../redux/actions/taskActions";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AddTask = () => {
   const [title, setTitle] = useState("");
@@ -14,6 +15,7 @@ const AddTask = () => {
     dispatch(createTask({ title, description }));
     setTitle("");
     setDescription("");
+    toast.success("Task created successfully!");
     navigate(-1);
   };
 

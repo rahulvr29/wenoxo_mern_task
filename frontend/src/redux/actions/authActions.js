@@ -6,7 +6,8 @@ export const register = (userData) => async (dispatch) => {
     localStorage.setItem('token', response.data.token);
     dispatch({ type: 'REGISTER_SUCCESS', payload: response.data });
   } catch (error) {
-    dispatch({ type: 'REGISTER_FAIL', payload: error.response.data.error });
+    const errorMessage = error.response?.data?.error || "Register failed";
+    dispatch({ type: 'REGISTER_FAIL', payload: errorMessage });
   }
 };
 
@@ -16,6 +17,8 @@ export const login = (userData) => async (dispatch) => {
     localStorage.setItem('token', response.data.token);
     dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
   } catch (error) {
-    dispatch({ type: 'LOGIN_FAIL', payload: error.response.data.error });
+    const errorMessage = error.response?.data?.error || "Login failed";
+    dispatch({ type: 'LOGIN_FAIL', payload: errorMessage });
+    throw new Error(errorMessage); 
   }
 };
